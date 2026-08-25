@@ -1,0 +1,27 @@
+@startuml C4-2-Contenedores
+!include <C4/C4_Container>
+
+title ms-despacho — C4 Nivel 2: Contenedores
+
+LAYOUT_WITH_LEGEND()
+
+Person(actor, "Repartidor", "Recibe rutas y reporta posición GPS")
+System_Boundary(sb, "ms-despacho (dominio de Despacho)") {
+  Container(api, "API de Despacho", "Spring Boot 3 · Java 21 · ECS Fargate", "Expone /api/despachos y persiste el dominio con su propia base de datos")
+  ContainerDb(dyn, "Estado en tiempo real", "Amazon DynamoDB (Global Tables)", "Despachos del dominio: eventos y estado vigente")
+  ContainerQueue(q, "Ingesta de eventos", "Amazon SQS + DLQ", "Eventos de alta frecuencia persistidos")
+}
+
+Container(apigw, "API Gateway", "Amazon API Gateway", "JWT + throttling")
+Container(core, "ms-envios", "Spring Boot 3", "Servicio central del caso: origen de los eventos")
+Container(ev, "Amazon EventBridge", "Servicio AWS", "Transiciones de estado del proceso")
+
+Rel(actor, apigw, "Usa la API", "HTTPS + JWT")
+Rel(apigw, api, "Enruta /api/despachos", "REST")
+Rel_Back(core, q, "Publica eventos del proceso", "AWS SDK")
+Rel(q, api, "Entrega eventos para procesar", "AWS SDK")
+Rel(api, dyn, "Actualiza el estado (condicional)", "AWS SDK")
+Rel(api, ev, "Publica la transición", "AWS SDK")
+
+SHOW_LEGEND()
+@enduml
