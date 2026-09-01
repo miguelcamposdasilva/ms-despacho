@@ -9,6 +9,23 @@ Microservicio correspondiente al **caso caso10 — CargoClick** (Logística / co
 | Calidad | JaCoCo cobertura LINE 100% · Cucumber (BDD) alineado a endpoints REST |
 | Entrega | Docker / Docker Compose |
 
+
+## Modelo de ramificacion
+
+### Modelos evaluados
+
+| Modelo | Como funciona | Fortaleza | Decision |
+|---|---|---|---|
+| **GitFlow** | `main` + `develop` + `feature/*` + `hotfix/*` | Separa lo estable de lo que esta en integracion | **Elegido** |
+| **GitHub Flow** | Solo `main` + ramas cortas con PR | Simple, ideal para despliegue continuo | Descartado: sin `develop` no hay donde acumular features entre entregas |
+| **Trunk-based** | Rama unica, ramas de horas, feature flags | Integracion continua real, menos conflictos | Descartado: exige CI maduro y merges varias veces al dia |
+
+### Modelo elegido: GitFlow
+
+Elegimos este modelo de ramificacion debido a que es la mejor manera de ir aprendiendo como se trabaja 
+a nivel profesional cuando hay proyectos grandes. Ademas el semestre de este ramo tiene planificadas varias entregas lo que calza perfectamente con releases planificadas. La rama develop permite integrar el trabajo de ambos sin dejar main inestable. Esta forma de trabajo nos permite corregir a tiempo errores, y desarrollar rapidamente nuevas funcionalidades, evitando pisar el y repetir codigos.  
+
+
 ## Responsabilidad (SRP)
 
 administra los datos y la lógica del dominio de Despacho del caso caso10 (CargoClick). Su base de datos es una **H2 en memoria** (un solo microservicio por base), cumpliendo aislamiento de datos por dominio.
