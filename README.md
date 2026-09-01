@@ -25,6 +25,9 @@ Microservicio correspondiente al **caso caso10 — CargoClick** (Logística / co
 Elegimos este modelo de ramificacion debido a que es la mejor manera de ir aprendiendo como se trabaja 
 a nivel profesional cuando hay proyectos grandes. Ademas el semestre de este ramo tiene planificadas varias entregas lo que calza perfectamente con releases planificadas. La rama develop permite integrar el trabajo de ambos sin dejar main inestable. Esta forma de trabajo nos permite corregir a tiempo errores, y desarrollar rapidamente nuevas funcionalidades, evitando pisar el y repetir codigos.  
 
+### Reflexión en el uso de la IA 
+Nuestra reflexión sobre el uso de la IA es que es una excelente herramienta de apoyo siempre y cuando se utilice con el debido cuidado y responsabilidad que corresponde. No reemplaza la tarea como profesional informatico, sino que la potencia y ayuda a ser mas productivo. Siempre se debe revisar lo que nos proporciona la IA ya que comete errores que pueden costar muy caro en la ejecución de un proyecto. 
+
 
 ## Responsabilidad (SRP)
 
