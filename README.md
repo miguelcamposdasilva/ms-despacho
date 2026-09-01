@@ -52,6 +52,53 @@ Al ejecutar el servicio, `http://localhost:8080/` muestra la página de presenta
 | PUT | `/api/despachos/{id}` | Actualiza un recurso |
 | DELETE | `/api/despachos/{id}` | Elimina un recurso |
 
+
+### Cómo escribir los commits
+Para que el historial quede limpiecito y se entienda qué hizo cada uno, usaremos este formato:
+`tipo(alcance): descripcion en imperativo`
+
+**Regla de oro:** Todo en minúsculas, sin tildes (para evitar cachos con la codificación) y máximo 72 caracteres de largo.
+
+| Tipo | Cuándo usarlo | Ejemplo |
+|---|---|---|
+| `feat` | Cuando agregamos algo nuevo | `feat(ui): agregar pie de pagina con version del servicio` |
+| `fix` | Cuando arreglamos un bug | `fix(ui): corregir titulo de la pagina de presentacion` |
+| `docs` | Cosas del README o documentación | `docs: agregar changelog del microservicio despacho` |
+| `chore` | Tareas de configuración, GitHub Actions, etc. | `chore(ci): agregar workflow hola mundo` |
+| `test` | Agregar o modificar pruebas | `test(service): cubrir caso de despacho inexistente` |
+| `refactor` | Mejorar código sin cambiar lo que hace | `refactor(repository): extraer consulta por ruta` |
+
+*Ojo: Para los alcances (scopes), tratemos de usar solo estos:* `ui`, `api`, `service`, `repository`, `ci`, `docker`, o `docs`.
+
+### Nombres de las ramas
+El formato es: `tipo/descripcion-corta`. Todo en minúsculas, separado por guiones, sin tildes ni caracteres raros, y ojalá no más de 4 palabras para no hacerla tan larga.
+
+- Si sale de `develop` ➡️ `feature/nombre-de-tu-rama` (Ej: `feature/pie-version`)
+- Si es una urgencia en `main` ➡️ `hotfix/nombre-del-arreglo` (Ej: `hotfix/titulo-pagina`)
+
+ **Prohibido:** Nombres genéricos como `arreglos`, `cambios-juan`, `test2` o ramas que no tengan el prefijo.
+
+
+### Flujo de Merge (Pull Requests)
+1. **Cero push directo:** Nadie le hace push directo a `main` ni a `develop`. Todo entra por Pull Request (PR).
+2. **Revisión obligatoria:** Todo PR necesita al menos **1 aprobación** del compañero. GitHub bloquea aprobarse uno mismo, así que siempre revisa el otro.
+3. El semáforo de GitHub Actions (CI) tiene que estar en verde. Si las pruebas fallan, no se mergea.
+4. **Las rutas:** Las ramas `feature/*` van hacia `develop`. Las ramas `hotfix/*` van a `main` (y después hay que acordarse de pasar ese arreglo de `main` a `develop` para no perderlo).
+5. Hacemos *merge commit* al fusionar para que nos quede la historia clara en el árbol.
+6. Una vez aprobado y fusionado el PR, borramos la rama para no acumular basura.
+
+### 👀 5. Revisión de código
+- El que revisa tiene que mirar de verdad la pestaña de *Files changed* y dejar mínimo un comentario (aunque sea un "todo bien"). ¡No vale aprobar a ciegas!
+- **Antes de subir el PR**, corre un `mvn verify` en tu compu y asegúrate de que la cobertura de pruebas siga al 100%. 
+- Nos vamos turnando: un PR lo hace uno y lo revisa el otro, y al siguiente cambiamos de rol.
+
+### 🏷️ 6. Control de Versiones
+Vamos a usar versionado semántico (`MAJOR.MINOR.PATCH`) en el `pom.xml` y en el `CHANGELOG.md`.
+
+- **PATCH** (ej: v1.0.0 a v1.0.1): Lo subimos cuando hacemos un hotfix.
+- **MINOR** (ej: v1.0.0 a v1.1.0): Lo subimos cuando juntamos varias features nuevas en una release.
+- **MAJOR** (ej: v1.0.0 a v2.0.0): Solo si hacemos un cambio gigante que rompa la compatibilidad de la API.
+
 ## Documentación del proyecto
 
 La documentación completa está en la carpeta [`docs/`](docs/):
@@ -63,6 +110,8 @@ La documentación completa está en la carpeta [`docs/`](docs/):
 - [`docs/04_Despliegue.md`](docs/04_Despliegue.md)
 - [`docs/05_Justificacion.md`](docs/05_Justificacion.md) — justificación del servicio: RF/RNF/seguridad cubiertos, stack y por qué cada tecnología AWS
 - [`docs/diagramas/`](docs/diagramas/) — C4 (contexto, contenedores, componentes), secuencia e infraestructura AWS — Docker, Docker Compose e integración
+
+
 
 ## Cómo ejecutar locmente
 
